@@ -1,12 +1,11 @@
 import java.util.Scanner;
 
-public class Player extends AbstractPlayer {
+public class HumanPlayer extends AbstractPlayer {
 
 
 
-    public Player(String nick, char sign){
+    public HumanPlayer(String nick){
         this.nick=nick;
-        this.sign=sign;
     }
 
 

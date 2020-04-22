@@ -12,11 +12,21 @@ public class Connect4Game {
     private static int MAXMOVES = 42;
     public static char EMPTYSIGN ='o';
 
+    public static char PLAYER1 = 'X';
+    public static char PLAYER2 = 'Y';
+
 
 
     public Connect4Game(AbstractPlayer player1, AbstractPlayer player2){
         this.player1=player1;
         this.player2=player2;
+
+        player1.setNumber(1);
+        player2.setNumber(2);
+
+        player1.setSign(PLAYER1);
+        player2.setSign(PLAYER2);
+
         board = new char[ROW][COL];
         fillBoard(EMPTYSIGN);
     }
@@ -35,7 +45,7 @@ public class Connect4Game {
 
                 showGameBoard(board);
 
-                System.out.println("Player " + currentPlayer.getNick() + ", please enter the column where you'd like to drop your piece.");
+                System.out.println("HumanPlayer " + currentPlayer.getNick() + ", please enter the column where you'd like to drop your piece.");
 
                 int column = getPlayerMovement(currentPlayer);
 
@@ -51,9 +61,7 @@ public class Connect4Game {
                     gameOver=true;
                 }
 
-                System.out.println(currentPlayer.nick);
                 currentPlayer = switchPlayer(currentPlayer);
-                System.out.println(currentPlayer.nick);
 
             } else {
                 gameOver = true;

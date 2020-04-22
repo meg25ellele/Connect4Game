@@ -1,17 +1,19 @@
-import java.util.List;
-
 public class Program {
 
 
     public static void main(String[] args){
 
-        AbstractPlayer player1 = new Player("Jack", 'J');
-        AbstractPlayer player2 = new PlayerAI(6,'X');
-
-        //Player player2 = new Player("Anna", 'A');
+        AbstractPlayer player2 = new AIPlayer(6);
+        AbstractPlayer player1 = new HumanPlayer("Jack");
 
 
-        Connect4Game game = new Connect4Game(player1,player2);
+        //HumanPlayer player2 = new HumanPlayer("Anna", 'A');
+
+        Connect4Game game = new Connect4Game(player2,player1);
+
+
+        System.out.println(player1.getSign());
+        System.out.println(player2.getSign());
 
         game.play();
 

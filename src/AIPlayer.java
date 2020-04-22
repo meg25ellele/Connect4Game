@@ -2,17 +2,25 @@ import javafx.util.Pair;
 
 import java.util.*;
 
-public class PlayerAI extends AbstractPlayer{
+public class AIPlayer extends AbstractPlayer{
 
     private static int FIRSTMOVE = 3;
     private int depth;
-    private static char ORDER_PLAYER_SIGN = 'J';
+    private static char ODER_PLAYER_SIGN = 'J';
 
-    public PlayerAI(int depth,char sign) {
+    public AIPlayer(int depth) {
         this.depth = depth;
-        this.sign=sign;
-        nick= "AI_minmax";
+        nick= "AI";
 
+    }
+    private void setOderPlayerSign() {
+
+        if(this.getSign() == Connect4Game.PLAYER1) {
+            ODER_PLAYER_SIGN = Connect4Game.PLAYER2;
+        } else
+        {
+            ODER_PLAYER_SIGN = Connect4Game.PLAYER1;
+        }
     }
 
     //pobiera ruchy, które może wykonać gracz
@@ -45,6 +53,8 @@ public class PlayerAI extends AbstractPlayer{
     @Override
     public int makeMove(char [][] board) {
 
+        setOderPlayerSign();
+
         int move =  MinMax(depth,board,this.getSign(),false,true,true);
        System.out.println(move+1);
         return move;
@@ -53,9 +63,7 @@ public class PlayerAI extends AbstractPlayer{
     private int MinMax (int depth, char [][] board,char playerSign,boolean min, boolean max,boolean init ){
 
         if(depth ==0) {
-            int score = countScore(board);
-          // System.out.println("SCORE: " + score);
-            return score;
+            return countScore(board);
         }
 
         List<Integer> moves = getMoves(board);
@@ -65,27 +73,21 @@ public class PlayerAI extends AbstractPlayer{
         for(int i=0;i< moves.size();i++) {
 
             char [][] newBoard = simulateMove(playerSign,moves.get(i),board);
-            //Connect4Game.showGameBoard(newBoard);
 
             int result = MinMax(depth-1, newBoard,simulateSwitchPlayer(playerSign),!min,!max,false);
-           // System.out.println(moves.get(i) + " " + result);
             scoreTable.put(moves.get(i),result);
         }
 
 
         //kiedy rekurencja się skończy i musimy zwrócić najlepszy ruch
         if(init) {
-            //Connect4Game.showGameBoard(board);
             int maxValue = Collections.max(scoreTable.values());
-           // System.out.println(scoreTable.keySet());
 
-         //   System.out.println(maxValue);
             int move = FIRSTMOVE;
 
 
             if (!allEqual(scoreTable) || board[0][FIRSTMOVE]!=Connect4Game.EMPTYSIGN) {
                 for (Integer key : scoreTable.keySet()) {
-                 //   System.out.println(key);
                     if (scoreTable.get(key).equals(maxValue)) {
                         move = key;
                         break;
@@ -98,12 +100,10 @@ public class PlayerAI extends AbstractPlayer{
         }
         //kiedy przewidujemy ruch drugiego gracza --> MIN
         if(min) {
-        //    System.out.println("MIN: " + Collections.min(scoreTable.values()));
             return Collections.min(scoreTable.values());
         }
         //kiedy przewidujemy nasz ruch --> MAX
         else {
-         //   System.out.println("MAX: " + Collections.max(scoreTable.values()));
             return Collections.max(scoreTable.values());
         }
     }
@@ -111,7 +111,7 @@ public class PlayerAI extends AbstractPlayer{
     private char simulateSwitchPlayer(char playerSign) {
 
         if (playerSign == this.getSign()) {
-            return ORDER_PLAYER_SIGN;
+            return ODER_PLAYER_SIGN;
         } else {
             return this.getSign();
         }
