@@ -5,7 +5,6 @@ public abstract class AbstractPlayer {
     protected int number;
 
 
-
     public String getNick() {
         return nick;
     }

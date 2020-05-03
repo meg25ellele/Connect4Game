@@ -1,5 +1,3 @@
-import javafx.util.Pair;
-
 public class Connect4Game {
 
     private  AbstractPlayer player1;
@@ -45,7 +43,7 @@ public class Connect4Game {
 
                 showGameBoard(board);
 
-                System.out.println("HumanPlayer " + currentPlayer.getNick() + ", please enter the column where you'd like to drop your piece.");
+                System.out.println("Player " + currentPlayer.getNumber() + " " + currentPlayer.getNick() + "(" + currentPlayer.getSign() +"), please enter the column where you'd like to drop your piece.");
 
                 int column = getPlayerMovement(currentPlayer);
 
@@ -57,7 +55,7 @@ public class Connect4Game {
 
                     System.out.println("GAME OVER!");
                     showGameBoard(board);
-                    System.out.println(currentPlayer.getNick() + "! You won!!!");
+                    System.out.println("Player " + currentPlayer.getNumber() + " " + currentPlayer.getNick() + "(" + currentPlayer.getSign() +")! You won!!!");
                     gameOver=true;
                 }
 
@@ -215,7 +213,7 @@ public class Connect4Game {
 
     private AbstractPlayer switchPlayer(AbstractPlayer currentPlayer) {
 
-        System.out.println(currentPlayer.getNumber());
+        //System.out.println(currentPlayer.getNumber());
         if (currentPlayer.getNumber() == 1) {
             return player2;
         } else {
