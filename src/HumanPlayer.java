@@ -36,6 +36,7 @@ public class HumanPlayer extends AbstractPlayer {
 
         }
 
+
         return column-1;
     }
 

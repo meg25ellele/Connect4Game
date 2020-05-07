@@ -6,7 +6,7 @@ public class SimpleEvaluation implements HeuristicEvaluationFunction {
             return 1;
         }
 
-        if(Connect4Game.findWinner(board)!=Connect4Game.EMPTYSIGN) {
+        else if(Connect4Game.findWinner(board)!=Connect4Game.EMPTYSIGN) {
             return -1;
         }
 

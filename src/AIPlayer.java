@@ -1,18 +1,25 @@
-import javafx.util.Pair;
+import javafx.util.Duration;
 
 import java.util.*;
 
 public abstract class AIPlayer extends AbstractPlayer{
 
     protected static int FIRSTMOVE = 3;
-    protected int depth;
     private static char ODER_PLAYER_SIGN = 'J';
+    protected int depth;
     protected HeuristicEvaluationFunction evaluationFunction;
+    protected boolean randomFirstMove;
+    protected int numberOfMoves;
+    protected List<Long> times;
 
-    public AIPlayer(int depth, HeuristicEvaluationFunction evaluationFunction) {
+
+    public AIPlayer(int depth, HeuristicEvaluationFunction evaluationFunction, boolean randomFirstMove) {
         this.depth = depth;
         this.evaluationFunction=evaluationFunction;
+        this.randomFirstMove=randomFirstMove;
+        numberOfMoves=0;
         nick= "AI";
+        times = new ArrayList<>();
 
     }
     protected void setOderPlayerSign() {
@@ -41,6 +48,18 @@ public abstract class AIPlayer extends AbstractPlayer{
     }
 
     public abstract int makeMove(char [][] board);
+
+    protected boolean isFirstMove(){
+
+        return this.getNumber() == 1 && numberOfMoves==0;
+    }
+
+    protected int makeRandomFirstMove(){
+
+        Random random = new Random();
+        return random.nextInt(6);
+
+    }
 
 
     protected char simulateSwitchPlayer(char playerSign) {
@@ -83,7 +102,24 @@ public abstract class AIPlayer extends AbstractPlayer{
         return true;
     }
 
+    public int getNumberOfMoves() {
+        return numberOfMoves;
+    }
 
+    public float getAvgTime(){
 
+        float sum = 0f;
 
+        for (int i=0;i<times.size();i++){
+            //System.out.print(i+1 + ": ");
+            float time = (float) times.get(i)/1000000000;
+            //System.out.println(time + " sekund");
+            sum+=time;
+        }
+
+        float avg = sum/times.size();
+        System.out.println("Średnio: " + avg + " sekund") ;
+
+        return avg;
+    }
 }

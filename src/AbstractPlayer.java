@@ -3,6 +3,7 @@ public abstract class AbstractPlayer {
     protected String nick;
     protected char sign;
     protected int number;
+    protected boolean isWinner = false;
 
 
     public String getNick() {

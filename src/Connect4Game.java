@@ -56,6 +56,7 @@ public class Connect4Game {
                     System.out.println("GAME OVER!");
                     showGameBoard(board);
                     System.out.println("Player " + currentPlayer.getNumber() + " " + currentPlayer.getNick() + "(" + currentPlayer.getSign() +")! You won!!!");
+                    currentPlayer.isWinner = true;
                     gameOver=true;
                 }
 
